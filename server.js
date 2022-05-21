@@ -49,7 +49,7 @@ function updateIntent( intent, user_input )
     var data = { "examples" : [ { "text" : user_input } ] };
     var body = { "body" : data };
     
-    var auth    = { "username" : apikey, "password" : g_wa_apikey };
+    var auth    = { "username" : "apikey", "password" : g_wa_apikey };
     var headers = { "Content-Type" : "application/json" };
     var parms   = { "auth" : auth, "headers" : headers };
     
@@ -58,9 +58,9 @@ function updateIntent( intent, user_input )
                  "body:\n" + JSON.stringify( body, null, 3 ) + "\n" +
                  "parms:\n" + JSON.stringify( parms, null, 3 ) );
     
-    g_axios.post( url, body, parms ).then( function( data )
+    g_axios.post( url, data, parms ).then( function( data )
     {
-        console.log( "\nupdateIntent data returned:\n" + JSON.stringify( data, null, 3 ) );
+        console.log( "Intent updated successfully" );
         
     } ).catch( function( error )
     {
