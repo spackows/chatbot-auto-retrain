@@ -1,0 +1,295 @@
+{
+  "intents": [
+    {
+      "intent": "horse_show_compete",
+      "examples": [
+        {
+          "text": "How can I enter the horse show?"
+        },
+        {
+          "text": "How can I register for the horse show?"
+        },
+        {
+          "text": "I want to compete in the horse show"
+        },
+        {
+          "text": "I want to pay my registration fees for the horse show"
+        },
+        {
+          "text": "I want to register for the horse show"
+        }
+      ],
+      "description": "Questions about competing in the horse show"
+    },
+    {
+      "intent": "horse_show_watch",
+      "examples": [
+        {
+          "text": "Are there bleachers to sit on to watch the horse show or do I have to bring my own chair?"
+        },
+        {
+          "text": "Can I bring my dog to watch the horse show?"
+        },
+        {
+          "text": "How much does it cost to watch the horse show?"
+        },
+        {
+          "text": "Is there a horse show programme?"
+        },
+        {
+          "text": "When does the horse show start?"
+        }
+      ],
+      "description": "Questions about watching the horse show"
+    }
+  ],
+  "entities": [],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "webhooks": [
+    {
+      "url": "your-webhook-here",
+      "name": "main_webhook",
+      "headers": []
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_1_1653106177847",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "Maybe: horse_show_watch",
+      "output": {
+        "generic": [
+          {
+            "title": "Confirm what you are asking about:",
+            "options": [
+              {
+                "label": "Question about competing in the horse show",
+                "value": {
+                  "input": {
+                    "text": "confirmed_horse_show_compete"
+                  }
+                }
+              },
+              {
+                "label": "Question about watching the horse show",
+                "value": {
+                  "input": {
+                    "text": "confirmed_horse_show_watch"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {
+        "USER_INPUT_ORG": "<? input.text ?>"
+      },
+      "conditions": "#horse_show_watch",
+      "dialog_node": "node_1_1653106177847",
+      "previous_sibling": "node_4_1653106008902"
+    },
+    {
+      "type": "standard",
+      "title": "Confirmed: horse_show_compete",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "intent": "horse_show_compete",
+            "user_input": "<? $USER_INPUT_ORG ?>"
+          },
+          "result_variable": "webhook_result_1"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "\"confirmed_horse_show_compete\" == input.text",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_2_1653106033206",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Confirmed: horse_show_watch",
+      "output": {},
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "intent": "horse_show_watch",
+            "user_input": "<? $USER_INPUT_ORG ?>"
+          },
+          "result_variable": "webhook_result_1"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "\"confirmed_horse_show_watch\" == input.text",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_2_1653106271360",
+      "previous_sibling": "node_2_1653106033206"
+    },
+    {
+      "type": "standard",
+      "title": "Maybe: horse_show_compete",
+      "output": {
+        "generic": [
+          {
+            "title": "Confirm what you are asking about:",
+            "options": [
+              {
+                "label": "Question about competing in the horse show",
+                "value": {
+                  "input": {
+                    "text": "confirmed_horse_show_compete"
+                  }
+                }
+              },
+              {
+                "label": "Question about watching the horse show",
+                "value": {
+                  "input": {
+                    "text": "confirmed_horse_show_watch"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {
+        "USER_INPUT_ORG": "<? input.text ?>"
+      },
+      "conditions": "#horse_show_compete",
+      "dialog_node": "node_4_1653106008902",
+      "previous_sibling": "node_2_1653106271360"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Here is an answer to your question about watching the horse show..."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1653106271360",
+      "conditions": "anything_else",
+      "dialog_node": "response_3_1653106271362"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Here is an answer to your question about competing in the horse show..."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1653106033206",
+      "conditions": "anything_else",
+      "dialog_node": "response_8_1653106214648"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi!  I can answer questions about the fall fair."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "nlp": {
+      "model": "baseline"
+    },
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": false,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "intent_classification": {
+      "training_backend_version": "v2"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "Fall fair skill",
+  "language": "en",
+  "description": ""
+}

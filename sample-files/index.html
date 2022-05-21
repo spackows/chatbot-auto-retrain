@@ -1,0 +1,19 @@
+<html>
+<body style="overflow-y: hidden;">
+<!-- Image source: https://commons.wikimedia.org/wiki/File:Dublin_Horse_Show_(6004270533).jpg -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Dublin_Horse_Show_(6004270533).jpg" style="position: absolute; bottom: 0px; width: 100%;"/>
+<script>
+  window.watsonAssistantChatOptions = {
+      integrationID: "", // The ID of this integration.
+      region: "", // The region your integration is hosted in.
+      serviceInstanceID: "", // The ID of your service instance.
+      onLoad: function(instance) { instance.render(); }
+    };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+    document.head.appendChild(t);
+  });
+</script>
+</body>
+</html>
