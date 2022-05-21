@@ -64,6 +64,12 @@ function updateIntent( intent, user_input )
         
     } ).catch( function( error )
     {
+        if( error.response && error.response.data && error.response.data.error && error.response.data.error.match( /Unique Violation/i ) )
+        {
+            console.log( "Repeat intent" );
+            return;
+        }
+        
         printAxiosError( error );
         
     } );
