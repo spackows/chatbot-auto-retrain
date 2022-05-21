@@ -24,6 +24,7 @@ g_app.post( '/confirmedintent', function( request, response )
     
     console.log( "\nrequest.body:\n" + JSON.stringify( request.body, null, 3 ) );
     
+    response.type( "json" );
     response.status( 200 ).end( "Success" );
     
 } );
