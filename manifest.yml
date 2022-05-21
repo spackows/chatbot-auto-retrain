@@ -1,0 +1,4 @@
+---
+applications:
+ - name: chatbot-auto-retrain
+   memory: 256M
