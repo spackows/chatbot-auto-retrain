@@ -11,7 +11,7 @@ const g_axios      = require( "axios"       );
 
 
 var g_app = g_express();
-g_app.use( g_express.static( __dirname + '/public' ) );
+g_app.use( g_express.static( __dirname + "/public" ) );
 g_app.use( g_bodyParser.json() );
 g_app.use( g_bodyParser.urlencoded( { extended: true } ) );
 
@@ -24,7 +24,7 @@ g_server.listen( 8080, function()
 } );
 
 
-g_app.post( '/confirmedintent', function( request, response )
+g_app.post( "/confirmedintent", function( request, response )
 {
     response.json( { "Success" : "Success" } );  // Return a successful response right away, no matter what, 
                                                  // to avoid disrupting the chatbot user experience
@@ -47,7 +47,6 @@ function updateIntent( intent, user_input )
     var url = g_wa_instance_url + "/v1/workspaces/" + g_wa_skill_id + "/intents/" + intent + "?append=true&version=2021-11-27";
     
     var data = { "examples" : [ { "text" : user_input } ] };
-    var body = { "body" : data };
     
     var auth    = { "username" : "apikey", "password" : g_wa_apikey };
     var headers = { "Content-Type" : "application/json" };
